@@ -29,8 +29,8 @@ XML.escapify = function(input) {
 	return input.replace(/</gm, "&lt;").replace(/>/gm, "&gt;").replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;");
 };
 
-XML.twDateToISO8601 = function(twDate) {
-	return twDate.substring(0, 4) + "-" + twDate.substring(4, 6) + "-" + twDate.substring(6, 8) + "T" + twDate.substring(8, 10) + ":" + twDate.substring(10, 12) + ":" + twDate.substring(12, 14);
+XML.twDateToWebDate = function(twDate) {
+	return twDate.substring(0, 4) + "-" + twDate.substring(4, 6) + "-" + twDate.substring(6, 8);
 }
 
 XML.stringify = function(data) {
@@ -38,7 +38,7 @@ XML.stringify = function(data) {
     data.forEach(function(element, index, array) {
     	x += "\t<url>\n";
         x += "\t\t<loc>http://dullroar.com/" + element.title.replace(/ /g,"%2520") + ".html</loc>\n";
-        x += "\t\t<lastmod>" + XML.twDateToISO8601(element.modified) + "</lastmod>\n";
+        x += "\t\t<lastmod>" + XML.twDateToWebDate(element.modified) + "</lastmod>\n";
         x += "\t\t<changefreq>";
         if(element.title.toLowerCase() === "index" || element.title.toLowerCase() === "home") {
         	x += "daily";
