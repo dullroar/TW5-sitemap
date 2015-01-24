@@ -37,7 +37,11 @@ XML.stringify = function(data) {
 	var x = "";
     data.forEach(function(element, index, array) {
     	x += "\t<url>\n";
-        x += "\t\t<loc>http://dullroar.com/" + element.title.replace(/ /g,"%2520") + ".html</loc>\n";
+		var server = $tw.wiki.getTiddlerText("sitemapserver", "");
+		if (server.slice(-1) !== "/") {
+			server += "/";
+		}
+        x += "\t\t<loc>" + server + element.title.replace(/ /g,"%2520") + ".html</loc>\n";
 		if (element.modified) {
 		    x += "\t\t<lastmod>" + XML.twDateToWebDate($tw.utils.parseDate(element.modified)) + "</lastmod>\n";
 		}
