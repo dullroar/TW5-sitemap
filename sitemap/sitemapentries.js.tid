@@ -1,6 +1,6 @@
 created: 20150104141600000
 creator: Jim
-modified: 20150104141600000
+modified: 20150124151600000
 modifier: Jim
 module-type: macro
 tags: static
@@ -30,7 +30,7 @@ XML.escapify = function(input) {
 };
 
 XML.twDateToWebDate = function(twDate) {
-	return twDate.substring(0, 4) + "-" + twDate.substring(4, 6) + "-" + twDate.substring(6, 8);
+	return $tw.utils.formatDateString(twDate, "YYYY-0MM-0DD");
 }
 
 XML.stringify = function(data) {
@@ -38,7 +38,9 @@ XML.stringify = function(data) {
     data.forEach(function(element, index, array) {
     	x += "\t<url>\n";
         x += "\t\t<loc>http://dullroar.com/" + element.title.replace(/ /g,"%2520") + ".html</loc>\n";
-        x += "\t\t<lastmod>" + XML.twDateToWebDate(element.modified) + "</lastmod>\n";
+		if (element.modified) {
+		    x += "\t\t<lastmod>" + XML.twDateToWebDate($tw.utils.parseDate(element.modified)) + "</lastmod>\n";
+		}
         x += "\t\t<changefreq>";
         if(element.title.toLowerCase() === "index" || element.title.toLowerCase() === "home") {
         	x += "daily";
